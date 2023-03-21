@@ -10,4 +10,4 @@ COPY . .
 
 EXPOSE 8000
 
-CMD [ "python3", "endpoint.py" ]
+CMD [ "python3", "StockPredictionA2.py" ]
