@@ -3,3 +3,4 @@ joblib
 scikit-learn
 Flask
 numpy
+psx-data-reader
