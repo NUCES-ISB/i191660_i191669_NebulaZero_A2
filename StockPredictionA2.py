@@ -13,11 +13,21 @@ app = Flask(__name__, template_folder='/app')
 
 # Load the dataset
 tickers = tickers()
+file_path = "result.csv"
 
-data2= stocks("ZTL", start=datetime.date(2020, 1, 1), end=datetime.date.today())
-data2.to_csv("result.csv")
+if os.path.exists(file_path):
+    os.remove(file_path)
+    print(f"{file_path} has been deleted.")
+else:
+    print(f"{file_path} does not exist.")
+
+
+
+
+
+data= stocks("ZTL", start=datetime.date(2020, 1, 1), end=datetime.date.today())
+data.to_csv(r'result.csv')
 data = pd.read_csv('result.csv')
-data2.set_index('Date', inplace=True, drop=False)
 # Split the data into training and testing sets (80% training, 20% testing)
 train_size = int(len(data) * 0.8)
 train_data = data.iloc[:train_size]
