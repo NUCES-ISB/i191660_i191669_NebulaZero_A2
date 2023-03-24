@@ -6,8 +6,17 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 from sklearn.preprocessing import PolynomialFeatures
+from psx import stocks, tickers
+import datetime
 
-app = Flask(__name__, template_folder='/app')
+tickers = tickers()
+tickers.tail()
+
+data = stocks("ZTL", start=datetime.date(2020, 1, 1), end=datetime.date.today())
+data.to_csv("result.csv")
+
+
+app=Flask(__name__,template_folder='templates')
 
 # Load the dataset
 data = pd.read_csv('result.csv')
@@ -58,12 +67,12 @@ def chart():
     # Render the template with the chart data and evaluation metrics
     return render_template('index.html', chart_data=chart_data, r2=r2, mse=mse, mae=mae)
 
-@app.route('/input')
+@app.route('/')
 def myinput():
     # Render the input template
-    return render_template('Input.html')
+    return render_template('input.html')
 
-@app.route("/predict", methods=['POST'])
+@app.route("/", methods=['POST'])
 def predict():
     try:
         # Extract the input features from the form
@@ -85,4 +94,3 @@ def predict():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000,debug=True)
-
