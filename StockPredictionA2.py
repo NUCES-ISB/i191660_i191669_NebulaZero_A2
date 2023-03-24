@@ -9,16 +9,13 @@ from sklearn.preprocessing import PolynomialFeatures
 from psx import stocks, tickers
 import datetime
 
-
-
-app=Flask(__name__,template_folder='templates')
+app = Flask(__name__, template_folder='/app')
 
 # Load the dataset
 tickers = tickers()
 
 data2 = stocks("ZTL", start=datetime.date(2020, 1, 1), end=datetime.date.today())
 data2.to_csv("result.csv")
-
 data = pd.read_csv('result.csv')
 
 # Split the data into training and testing sets (80% training, 20% testing)
@@ -67,12 +64,12 @@ def chart():
     # Render the template with the chart data and evaluation metrics
     return render_template('index.html', chart_data=chart_data, r2=r2, mse=mse, mae=mae)
 
-@app.route('/')
+@app.route('/input')
 def myinput():
     # Render the input template
-    return render_template('input.html')
+    return render_template('Input.html')
 
-@app.route("/", methods=['POST'])
+@app.route("/predict", methods=['POST'])
 def predict():
     try:
         # Extract the input features from the form
@@ -94,3 +91,4 @@ def predict():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000,debug=True)
+
