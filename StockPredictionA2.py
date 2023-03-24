@@ -17,7 +17,7 @@ tickers = tickers()
 data = stocks("ZTL", start=datetime.date(2020, 1, 1), end=datetime.date.today())
 data.to_csv("result.csv")
 data2 = pd.read_csv('result.csv')
-
+data.set_index('Date', inplace=True, drop=False)
 # Split the data into training and testing sets (80% training, 20% testing)
 train_size = int(len(data) * 0.8)
 train_data = data.iloc[:train_size]
